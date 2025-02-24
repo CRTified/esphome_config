@@ -31,7 +31,6 @@
 
             # yaml hooks
             check-yaml.enable = true;
-            sort-simple-yaml.enable = true;
 
             # markdown hooks
             lychee.enable = true;

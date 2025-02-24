@@ -1,0 +1,26 @@
+<<: !include .base.yaml
+
+esp8266:
+  board: esp01_1m
+
+output:
+  - platform: esp8266_pwm
+    pin: 12
+    frequency: 1000 Hz
+    id: pwm_b
+  - platform: esp8266_pwm
+    pin: 13
+    frequency: 1000 Hz
+    id: pwm_g
+  - platform: esp8266_pwm
+    pin: 15
+    frequency: 1000 Hz
+    id: pwm_r
+  - platform: esp8266_pwm
+    pin: 14
+    frequency: 1000 Hz
+    id: pwm_w1
+  - platform: esp8266_pwm
+    pin: 4
+    frequency: 1000 Hz
+    id: pwm_w2

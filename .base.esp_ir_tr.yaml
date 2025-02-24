@@ -1,0 +1,16 @@
+<<: !include .base.yaml
+
+# ESP8285 ESP-01M IR-Transceiver
+
+esp8266:
+  board: esp8285
+
+remote_receiver:
+  pin:
+    number: GPIO14
+    inverted: true
+    mode: INPUT_PULLUP
+
+remote_transmitter:
+  pin: GPIO4
+  carrier_duty_percent: 50%

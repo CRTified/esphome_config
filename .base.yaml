@@ -19,3 +19,9 @@ sensor:
     id: wifi_signal_db
     update_interval: 60s
     entity_category: "diagnostic"
+
+  - platform: uptime
+    type: seconds
+    name: Uptime
+    entity_category: "diagnostic"
+

@@ -1,0 +1,177 @@
+<<: !include .base.lolin_s2_mini.yaml
+
+esphome:
+  name: fledermaus
+  on_boot:
+    then:
+      - if:
+          condition:
+            binary_sensor.is_on: fledermaus_switch
+          then:
+            - light.turn_on:
+                id: fledermaus
+                transition_length: 2s
+                red: 40%
+                green: 0%
+                blue: 73%
+          else:
+            - light.turn_off:
+                id: fledermaus
+
+api:
+  reboot_timeout: 0s
+
+web_server:
+  port: 80
+
+wled:
+
+binary_sensor:
+  - platform: gpio
+    id: fledermaus_switch
+    pin:
+      number: GPIO21
+      inverted: true
+      mode:
+        input: true
+        pullup: true
+    name: Fledermaus Schalter
+    on_press:
+      then:
+        - light.turn_on:
+            id: fledermaus
+            transition_length: 2s
+            red: 40%
+            green: 0%
+            blue: 73%
+    on_release:
+      then:
+        - light.turn_off: fledermaus
+
+
+light:
+  - platform: neopixelbus
+    id: sk6812strip
+    internal: true
+    type: GRB
+    pin: GPIO33
+    num_leds: 112
+    variant: SK6812
+
+  - platform: partition
+    name: "Status LED"
+    id: statusled
+    segments:
+      - id: sk6812strip
+        from: 0
+        to: 0
+
+  - platform: partition
+    name: "Fledermaus"
+    id: fledermaus
+    icon: mdi:bat
+    segments:
+      - id: sk6812strip
+        from: 1
+        to: 111
+    restore_mode: ALWAYS_OFF
+    effects:
+      - addressable_rainbow:
+          name: "Rainbow"
+          width: 111
+          speed: 2
+      - addressable_rainbow:
+          name: "Triple Rainbow"
+          width: 37
+          speed: 2
+      - addressable_twinkle:
+      - addressable_random_twinkle:
+          name: Color Twinkle
+      - addressable_fireworks:
+          name: Fireworks
+          use_random_color: true
+      - addressable_color_wipe:
+          name: Dot
+          colors:
+            - red: 40%
+              green: 0%
+              blue: 73%
+              num_leds: 5
+              gradient: true
+            - red: 0%
+              green: 0%
+              blue: 0%
+              num_leds: 5
+              gradient: true
+            - red: 0%
+              green: 0%
+              blue: 0%
+              num_leds: 101
+              gradient: false
+          add_led_interval: 150ms
+      - wled:
+      - addressable_lambda:
+          name: "Fledermaus 4 Frames"
+          update_interval: 300ms
+          lambda: |-
+            static uint_fast8_t progress = 0;
+            if (initial_run) {
+              progress = 0;
+            }
+            it.all() = Color::BLACK;
+            switch(__builtin_labs((progress & 0x07) - 4))
+            {
+              default:
+              case 3:
+                it.range( 25,  38) = current_color;
+                it.range( 76,  89) = current_color;
+              case 2:
+                it.range( 38,  48) = current_color;
+                it.range( 66,  76) = current_color;
+                it.range( 15,  25) = current_color;
+                it.range( 89,  99) = current_color;
+              case 1:
+                it.range( 48,  51) = current_color;
+                it.range( 63,  66) = current_color;
+                it.range(  9,  15) = current_color;
+                it.range( 99, 105) = current_color;
+              case 0:
+                it.range( 51,  63) = current_color;
+                it.range(  0,   9) = current_color;
+                it.range(105, 111) = current_color;
+                break;
+            }
+            progress++;
+      - addressable_lambda:
+          name: "Fledermaus 2 Frames"
+          update_interval: 50ms # Change only every 16 frames, so every 800ms
+          lambda: |-
+            static uint_fast8_t progress = 0;
+            if (initial_run) {
+              progress = 0;
+            }
+            it.all() = Color::BLACK;
+            Color red = Color(255, 0, 0);
+            switch((progress >> 4) & 0x01)
+            {
+              default:
+              case 1:
+                it.range( 25,  38) = current_color;
+                it.range( 76,  89) = current_color;
+
+                it.range( 38,  48) = current_color;
+                it.range( 66,  76) = current_color;
+                it.range( 15,  25) = current_color;
+                it.range( 89,  99) = current_color;
+
+                it.range( 48,  51) = current_color;
+                it.range( 63,  66) = current_color;
+                it.range(  9,  15) = current_color;
+                it.range( 99, 105) = current_color;
+              case 0:
+                it.range( 51,  63) = red;
+                it.range(  0,   9) = red;
+                it.range(105, 111) = red;
+                break;
+            }
+            progress++;

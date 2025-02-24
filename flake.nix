@@ -29,9 +29,6 @@
             shellcheck.enable = true;
             shfmt.enable = true;
 
-            # yaml hooks
-            check-yaml.enable = true;
-
             # markdown hooks
             lychee.enable = true;
 

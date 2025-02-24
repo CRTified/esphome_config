@@ -4,3 +4,6 @@
 /.esphome/
 /secrets.yaml
 secrets.yaml
+.pre-commit-config.yaml
+.direnv
+.esphome

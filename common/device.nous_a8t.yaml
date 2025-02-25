@@ -1,5 +1,3 @@
-<<: !include .base.yaml
-
 esp32:
   board: esp32dev
   framework:
@@ -13,6 +11,7 @@ light:
     pin:
       number: GPIO02
       inverted: true
+      ignore_strapping_warning: true
 
 binary_sensor:
   - platform: gpio

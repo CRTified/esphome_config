@@ -8,7 +8,7 @@ This repo contains my [esphome.io](https://esphome.io) config files.
 |------------|--------------------------------------------------------------------------------|
 | `assets/`  | Pictures, helper scripts and other misc content not required to run esphome    |
 | `common/`  | Shared configurations, i.e., base config and fundamental device configurations |
-| `devices/` | Configuration for specific devices`                                            |
+| `devices/` | Configuration for specific devices                                             |
 
 For the common configuration aspects, this set of configurations relies on [esphome packages](https://esphome.io/components/packages.html). This allows merging the YAML files key-by-key.
 

@@ -146,7 +146,7 @@ light:
             progress++;
       - addressable_lambda:
           name: "Fledermaus 2 Frames"
-          update_interval: 50ms # Change only every 16 frames, so every 800ms
+          update_interval: 50ms    # Change only every 16 frames, so every 800ms
           lambda: |-
             static uint_fast8_t progress = 0;
             if (initial_run) {

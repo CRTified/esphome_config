@@ -34,6 +34,99 @@
 
             # git hooks
             convco.enable = true;
+
+            # yaml hooks
+            yamllint = {
+              enable = true;
+              settings.configuration = builtins.toJSON {
+                extends = "default";
+                rules = {
+                  braces = {
+                    level = "error";
+                    max-spaces-inside = 1;
+                    max-spaces-inside-empty = -1;
+                    min-spaces-inside = 0;
+                    min-spaces-inside-empty = -1;
+                  };
+                  brackets = {
+                    level = "error";
+                    max-spaces-inside = 0;
+                    max-spaces-inside-empty = -1;
+                    min-spaces-inside = 0;
+                    min-spaces-inside-empty = -1;
+                  };
+                  colons = {
+                    level = "error";
+                    max-spaces-after = 1;
+                    max-spaces-before = 0;
+                  };
+                  commas = {
+                    level = "error";
+                    max-spaces-after = 1;
+                    max-spaces-before = 0;
+                    min-spaces-after = 1;
+                  };
+                  comments = {
+                    level = "error";
+                    min-spaces-from-content = 2;
+                    require-starting-space = true;
+                  };
+                  comments-indentation = "disable";
+                  document-end = {
+                    level = "error";
+                    present = false;
+                  };
+                  document-start = {
+                    level = "error";
+                    present = false;
+                  };
+                  empty-lines = {
+                    level = "error";
+                    max = 2;
+                    max-end = 1;
+                    max-start = 0;
+                  };
+                  hyphens = {
+                    level = "error";
+                    max-spaces-after = 1;
+                  };
+                  indentation = {
+                    check-multi-line-strings = false;
+                    indent-sequences = true;
+                    level = "error";
+                    spaces = 2;
+                  };
+                  key-duplicates = {
+                    level = "error";
+                  };
+                  line-length = "disable";
+                  new-line-at-end-of-file = {
+                    level = "error";
+                  };
+                  new-lines = {
+                    level = "error";
+                    type = "unix";
+                  };
+                  trailing-spaces = {
+                    level = "error";
+                  };
+                  truthy = {
+                    level = "error";
+                  };
+                };
+              };
+            };
+
+            # esphome hooks
+            esphome-config = {
+              enable = true;
+              name = "esphome config";
+              entry = "${nixpkgs.legacyPackages.${system}.esphome}/bin/esphome --quiet config";
+              files = "^devices/";
+              types = [ "yaml" ];
+              pass_filenames = true;
+              stages = [ "pre-commit" ];
+            };
           };
         };
       });

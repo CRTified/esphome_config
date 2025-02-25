@@ -77,7 +77,7 @@ sensor:
 
       return {};
     update_interval: 500ms
-    notify: False
+    notify: false
 
   - platform: template
     name: "Pinecil Tip Temp"

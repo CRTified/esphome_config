@@ -5,7 +5,7 @@ esp32:
 
 light:
   - platform: status_led
-    internal: True
+    internal: true
     name: "Switch state"
     id: led
     pin:
@@ -19,7 +19,7 @@ binary_sensor:
     internal: true
     pin:
       number: GPIO04
-      inverted: yes
+      inverted: true
       mode: INPUT_PULLUP
     on_press:
       - switch.toggle: "relay"
@@ -41,7 +41,7 @@ sensor:
     model: BL0937
     sel_pin:
       number: GPIO14
-      inverted: True
+      inverted: true
     cf_pin: GPIO27
     cf1_pin: GPIO26
     current_resistor: 0.00126

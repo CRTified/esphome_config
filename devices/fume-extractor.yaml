@@ -3,15 +3,37 @@ packages:
   device: !include ../common/device.nous_a8t.yaml
 
 esphome:
-  name: solder-fan
-  friendly_name: Solder Fan
-
+  name: "fume-extractor"
+  friendly_name: Fume Extractor
+  on_boot:
+    # Suspend the ble_client sensors to prevent connection failure logging
+    - priority: -100
+      then:
+        - component.suspend: PINECIL_RSSI
+        - component.suspend: PINECIL_BULK_DATA
 
 ble_client:
   - mac_address: A8:17:10:21:E0:B3
     id: pinecil
+    # Suspend the ble_client sensors on disconnect to prevent failed reads
+    on_disconnect:
+      then:
+        - component.suspend: PINECIL_RSSI
+        - component.suspend: PINECIL_BULK_DATA
+    # Resume the ble_client sensors on connection
+    on_connect:
+      then:
+        - component.resume: PINECIL_RSSI
+        - component.resume: PINECIL_BULK_DATA
 
 sensor:
+  - platform: ble_client
+    type: rssi
+    ble_client_id: pinecil
+    id: PINECIL_RSSI
+    name: "Pinecil RSSI"
+    update_interval: 5s
+
   - platform: ble_client
     type: characteristic
     ble_client_id: pinecil

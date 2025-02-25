@@ -66,8 +66,9 @@ Uses a Lolin S2 mini as driver, which does not support bluetooth.
 
 Remote-enabled copy of the IR remote of a Trotec 140E/145E air purifier.
 
-### [`devices/solder_fan.yaml`](./devices/solder_fan.yaml)
+### [`devices/fume-extractor.yaml`](./devices/fume-extractor.yaml)
 
 Device: Nous A8T.
 
-ESP32-C3 powered smart plug that connects to my pinecil over Bluetooth and reports the status. It also triggers the relay whenever the iron reports that it is in "Soldering"-mode, starting the fume extractor.
+ESP32-C3 powered smart plug that connects to my Pinecil v2 over Bluetooth and reports the status.
+It also triggers the relay whenever the iron reports that it is in "Soldering"-mode, starting the fume extractor.

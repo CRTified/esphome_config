@@ -1,0 +1,85 @@
+<<: !include .base.yaml
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+light:
+  - platform: status_led
+    internal: True
+    name: "Switch state"
+    id: led
+    pin:
+      number: GPIO02
+      inverted: true
+
+binary_sensor:
+  - platform: gpio
+    id: "push_button"
+    internal: true
+    pin:
+      number: GPIO04
+      inverted: yes
+      mode: INPUT_PULLUP
+    on_press:
+      - switch.toggle: "relay"
+
+switch:
+  - platform: gpio
+    pin: GPIO13
+    id: relay
+    name: "Relay"
+    restore_mode: RESTORE_DEFAULT_OFF
+    icon: mdi:power
+    on_turn_on:
+      - light.turn_on: led
+    on_turn_off:
+      - light.turn_off: led
+
+sensor:
+  - platform: hlw8012
+    model: BL0937
+    sel_pin:
+      number: GPIO14
+      inverted: True
+    cf_pin: GPIO27
+    cf1_pin: GPIO26
+    current_resistor: 0.00126
+    voltage_divider: 1570
+    change_mode_every: 1
+    update_interval: 5s
+
+    current:
+      id: current
+      name: "current"
+      unit_of_measurement: A
+      accuracy_decimals: 3
+      icon: mdi:current-ac
+      filters:
+        - lambda: |-
+            if (x < 0.01) return 0;
+            else return x;
+
+    voltage:
+      id: voltage
+      name: "voltage"
+      unit_of_measurement: V
+      accuracy_decimals: 1
+      icon: mdi:flash-outline
+
+    power:
+      name: "power"
+      id: power
+      unit_of_measurement: W
+      icon: mdi:flash-outline
+      force_update: true
+      filters:
+        - calibrate_linear:
+            - 0.0 -> 0.0
+            - 24.50 -> 28.40
+      on_value_range:
+        - above: 2000
+          then:
+            - switch.turn_off: relay
+

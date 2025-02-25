@@ -4,6 +4,7 @@ wifi:
   fast_connect: on
 
 logger:
+  level: INFO
 
 api:
   encryption:

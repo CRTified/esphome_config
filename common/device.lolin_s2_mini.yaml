@@ -1,4 +1,2 @@
 esp32:
   board: lolin_s2_mini
-
-<<: !include .base.yaml

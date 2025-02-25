@@ -2,6 +2,15 @@
 
 This repo contains my [esphome.io](https://esphome.io) config files.
 
+# Organization
+
+| Path       | Content                                                                        |
+|------------|--------------------------------------------------------------------------------|
+| `assets/`  | Pictures, helper scripts and other misc content not required to run esphome    |
+| `common/`  | Shared configurations, i.e., base config and fundamental device configurations |
+| `devices/` | Configuration for specific devices`                                            |
+
+For the common configuration aspects, this set of configurations relies on [esphome packages](https://esphome.io/components/packages.html). This allows merging the YAML files key-by-key.
 
 # Configuration files
 
@@ -44,10 +53,21 @@ Simple dev board for prototyping.
 
 ## Devices
 
-### [`fledermaus.yaml`](./fledermaus.yaml)
+### [`devices/fledermaus.yaml`](./devices/fledermaus.yaml)
 
-### [`trotec_145e_remote.yaml`](./trotec_145e_remote.yaml)
+![Picture of an LED decoration. The LEDs trace the outline of a bat and have numbers next to them from counting the index of the LEDs along the outline](./assets/fledermaus.png)
 
-### [`solder_fan.yaml`](./solder_fan.yaml)
+LED decoration which I modded the hell out of it. Replaced the
+monocolor LED strip with a high-density SK6812 RGB LED-strip.
 
-Nous A8T. ESP32-C3 powered smart plug that connects to my pinecil over Bluetooth and reports the status. It also triggers the relay whenever the iron reports that it is in "Soldering"-mode, starting the fume extractor.
+Uses a Lolin S2 mini as driver, which does not support bluetooth.
+
+### [`devices/trotec_145e_remote.yaml`](./devices/trotec_145e_remote.yaml)
+
+Remote-enabled copy of the IR remote of a Trotec 140E/145E air purifier.
+
+### [`devices/solder_fan.yaml`](./devices/solder_fan.yaml)
+
+Device: Nous A8T.
+
+ESP32-C3 powered smart plug that connects to my pinecil over Bluetooth and reports the status. It also triggers the relay whenever the iron reports that it is in "Soldering"-mode, starting the fume extractor.

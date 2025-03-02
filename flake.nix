@@ -127,6 +127,16 @@
               pass_filenames = true;
               stages = [ "pre-commit" ];
             };
+
+            # exif hook
+            exif-cleanup = {
+              enable = true;
+              name = "exif cleanup";
+              entry = "${nixpkgs.legacyPackages.${system}.exiftool}/bin/exiftool -all:all= -overwrite_original_in_place -quiet";
+              types = [ "image" ];
+              pass_filenames = true;
+              stages = [ "pre-commit" ];
+            };
           };
         };
       });

@@ -1,2 +1,6 @@
 esp32:
   board: lolin_s2_mini
+
+esphome:
+  platformio_options:
+    extra_scripts: ["pre:../../../../common/disable_lto.py"]

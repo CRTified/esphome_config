@@ -1,8 +1,13 @@
 {
   description = "Collection of my esphome.io configurations.";
 
-  inputs.pre-commit-hooks.url = "github:cachix/git-hooks.nix";
-
+  inputs = {
+    pre-commit-hooks = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:cachix/git-hooks.nix";
+    };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  };
   outputs =
     { self, nixpkgs, ... }@inputs:
     let
@@ -132,7 +137,9 @@
             exif-cleanup = {
               enable = true;
               name = "exif cleanup";
-              entry = "${nixpkgs.legacyPackages.${system}.exiftool}/bin/exiftool -all:all= -overwrite_original_in_place -quiet";
+              entry = "${
+                nixpkgs.legacyPackages.${system}.exiftool
+              }/bin/exiftool -all:all= -overwrite_original_in_place -quiet";
               types = [ "image" ];
               pass_filenames = true;
               stages = [ "pre-commit" ];

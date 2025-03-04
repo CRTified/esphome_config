@@ -1,0 +1,17 @@
+packages:
+  base: !include ../common/base.yaml
+  device: !include ../common/device.esp_ir_tr.yaml
+
+esphome:
+  name: ir-dumper
+  friendly_name: IR Dumper
+
+web_server:
+  log: true
+  ota: false
+  local: true
+  version: 3
+
+remote_receiver:
+  dump:
+    - raw

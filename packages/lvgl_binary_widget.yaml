@@ -1,0 +1,46 @@
+text_sensor:
+  - platform: homeassistant
+    id: ${sensor_id}
+    entity_id: ${entity_id}
+    on_value:
+      then:
+        - if:
+            condition:
+              lambda: |-
+                return ((0 == x.compare(std::string{"unavailable"})) or (0 == x.compare(std::string{"unknown"})));
+            then:
+              - lvgl.led.update:
+                  id: ${sensor_id}_led
+                  color: 0x444444
+            else:
+              - if:
+                  condition:
+                    lambda: |-
+                      return ((0 == x.compare(std::string{"on"})));
+                  then:
+                    - lvgl.led.update:
+                        id: ${sensor_id}_led
+                        color: 0xFF0000
+                  else:
+                    - lvgl.led.update:
+                        id: ${sensor_id}_led
+                        color: 0x00FF00
+
+lvgl:
+  pages:
+    - id: !extend ${lvgl_id}
+      widgets:
+        - obj:
+            height: SIZE_CONTENT
+            width: 32%
+            widgets:
+              - led:
+                  id: ${sensor_id}_led
+                  align: TOP_MID
+              - label:
+                  text: ${label}
+                  text_font: roboto24
+                  align_to:
+                    id: ${sensor_id}_led
+                    align: OUT_BOTTOM_MID
+

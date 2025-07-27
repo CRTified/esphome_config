@@ -1,0 +1,114 @@
+packages:
+  base: !include ../common/base.yaml
+  device: !include ../common/device.esp32-s3-4848s040-3ch.yaml
+  lvgl-base: !include ../lvgl/base.yaml
+  sensor_demo: !include
+    file: ../packages/lvgl_binary_widget.yaml
+    vars:
+      sensor_id: test
+      label: Test Input
+      entity_id: input_boolean.testschalter
+      lvgl_id: main_page
+  widget_fenster_0: !include
+    file: ../packages/lvgl_binary_widget.yaml
+    vars:
+      sensor_id: bad_unten
+      label: Bad unten
+      entity_id: binary_sensor.bad_unten_fenster_contact
+      lvgl_id: main_page
+  widget_fenster_1: !include
+    file: ../packages/lvgl_binary_widget.yaml
+    vars:
+      sensor_id: kuche
+      label: Küche
+      entity_id: binary_sensor.kuche_fenster_contact
+      lvgl_id: main_page
+  widget_fenster_2: !include
+    file: ../packages/lvgl_binary_widget.yaml
+    vars:
+      sensor_id: balkon
+      label: Balkon
+      entity_id: binary_sensor.wohnzimmer_balkontur_contact
+      lvgl_id: main_page
+  widget_fenster_3: !include
+    file: ../packages/lvgl_binary_widget.yaml
+    vars:
+      sensor_id: flur_oben_vorne
+      label: Flur Oben Vorne
+      entity_id: binary_sensor.flur_oben_dachfenster_vorne_contact
+      lvgl_id: main_page
+  widget_fenster_4: !include
+    file: ../packages/lvgl_binary_widget.yaml
+    vars:
+      sensor_id: kuken_dach
+      label: Küken Dach
+      entity_id: binary_sensor.az_kuken_dachfenster_contact
+      lvgl_id: main_page
+  widget_fenster_5: !include
+    file: ../packages/lvgl_binary_widget.yaml
+    vars:
+      sensor_id: kuken_giebel
+      label: Küken Giebel
+      entity_id: binary_sensor.az_kuken_giebelfenster_contact
+      lvgl_id: main_page
+  widget_fenster_6: !include
+    file: ../packages/lvgl_binary_widget.yaml
+    vars:
+      sensor_id: schlafzimmer
+      label: Schlafzimmer
+      entity_id: binary_sensor.schlafzimmer_dachfenster_contact
+      lvgl_id: main_page
+  widget_fenster_7: !include
+    file: ../packages/lvgl_binary_widget.yaml
+    vars:
+      sensor_id: flur_oben_hinten
+      label: Flur Oben Hinten
+      entity_id: binary_sensor.flur_oben_dachfenster_hinten_contact
+      lvgl_id: main_page
+  widget_fenster_8: !include
+    file: ../packages/lvgl_binary_widget.yaml
+    vars:
+      sensor_id: bad_oben
+      label: Bad oben
+      entity_id: binary_sensor.bad_oben_dachfenster_contact
+      lvgl_id: main_page
+  widget_fenster_9: !include
+    file: ../packages/lvgl_binary_widget.yaml
+    vars:
+      sensor_id: vampi_dach
+      label: Vampi Dach
+      entity_id: binary_sensor.az_vampi_dachfenster_contact
+      lvgl_id: main_page
+  widget_fenster_10: !include
+    file: ../packages/lvgl_binary_widget.yaml
+    vars:
+      sensor_id: vampi_giebel
+      label: Vampi Giebel
+      entity_id: binary_sensor.az_vampi_giebelfenster_contact
+      lvgl_id: main_page
+
+esphome:
+  name: 3ch-test
+  friendly_name: 3 Channel Display
+
+web_server:
+  log: true
+  ota: false
+  local: true
+  version: 3
+
+
+lvgl:
+  pages:
+    - id: main_page
+      skip: false
+      layout:
+        type: flex
+        flex_flow: column_wrap
+      width: 100%
+      bg_color: 0x000000
+      bg_opa: cover
+      pad_top: 5
+      pad_left: 5
+      pad_right: 5
+      pad_bottom: 30px

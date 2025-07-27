@@ -1,0 +1,10 @@
+packages:
+  device: !include ./device.esp32-s3-4848s040-1ch.yaml
+
+output:
+  - id: internal_relay_2
+    platform: gpio
+    pin: 2
+  - id: internal_relay_3
+    platform: gpio
+    pin: 1

@@ -1,0 +1,146 @@
+color:
+  # Create a Home Assistant blue color
+  - id: ha_blue
+    hex: 51c0f2
+
+api:
+  on_client_connected:
+    - if:
+        condition:
+          lambda: 'return (0 == client_info.find("Home Assistant "));'
+        then:
+          - lvgl.widget.show: lbl_hastatus
+  on_client_disconnected:
+    - if:
+        condition:
+          lambda: 'return (0 == client_info.find("Home Assistant "));'
+        then:
+          - lvgl.widget.hide: lbl_hastatus
+
+
+# -------------------------------------------
+# Graphics and Fonts
+# -------------------------------------------
+font:
+  - file: "gfonts://Roboto"
+    id: roboto24
+    size: 16
+    bpp: 4
+    glyphsets: ["GF_Latin_Core"]
+    extras:
+      - file: https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.4.47/fonts/materialdesignicons-webfont.ttf
+        glyphs:
+          [
+            "\U000F004B",
+            # "\U0000f0ed",
+            "\U000F006E",
+            "\U000F012C",
+            "\U000F179B",
+            "\U000F0748",
+            "\U000F1A1B",
+            "\U000F02DC",
+            "\U000F0A02",
+            "\U000F035F",
+            "\U000F0156",
+            "\U000F0C5F",
+            "\U000f0084",
+            "\U000f0091",
+          ]
+
+# -------------------------------------------
+# LVGL Buttons
+# -------------------------------------------
+lvgl:
+  on_idle:
+    - timeout: 15s
+      then:
+        - logger.log: idle timeout
+        - if:
+            condition:
+              lvgl.is_idle:
+                timeout: 5s
+            then:
+              - logger.log: LVGL is idle
+    - timeout: 30s
+      then:
+        - logger.log: idle 15s timeout
+        - light.turn_off:
+            id: backlight
+            transition_length: 5s
+        - lvgl.pause:
+            show_snow: true
+
+  style_definitions:
+    - id: header_footer
+      bg_color: 0x2F8CD8
+      bg_grad_color: 0x005782
+      bg_grad_dir: VER
+      bg_opa: COVER
+      border_opa: TRANSP
+      radius: 0
+      pad_all: 0
+      pad_row: 0
+      pad_column: 0
+      border_color: 0x0077b3
+      text_color: 0xFFFFFF
+      width: 100%
+      height: 30
+
+  theme:
+    button:
+      text_font: roboto24
+      scroll_on_focus: true
+      # group: general
+      radius: 25
+      width: 150
+      height: 109
+      pad_left: 10px
+      pad_top: 10px
+      pad_bottom: 10px
+      pad_right: 10px
+      shadow_width: 0
+      bg_color: 0x313131
+      text_color: 0xB6B6B6
+      checked:
+        bg_color: 0xCC5E14
+        text_color: 0xB6B6B6
+
+  page_wrap: true
+  top_layer:
+    widgets:
+      - label:
+          text: "\uF1EB"
+          id: lbl_hastatus
+          hidden: true
+          align_to:
+            id: page_home
+            align: OUT_RIGHT_MID
+          text_align: right
+          text_color: 0xFFFFFF
+
+      - buttonmatrix:
+          align: bottom_mid
+          styles: header_footer
+          pad_all: 0
+          outline_width: 0
+          id: top_layer
+          items:
+            styles: header_footer
+          rows:
+            - buttons:
+                - id: page_prev
+                  text: "\uF053"
+                  on_press:
+                    then:
+                      lvgl.page.previous:
+                - id: page_home
+                  text: "\uF015"
+                  on_press:
+                    then:
+                      lvgl.page.show: main_page
+                - id: page_next
+                  text: "\uF054"
+                  on_press:
+                    then:
+                      lvgl.page.next:
+

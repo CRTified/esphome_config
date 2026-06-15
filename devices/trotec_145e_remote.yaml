@@ -3,7 +3,7 @@ packages:
   device: !include ../common/device.esp_ir_tr.yaml
 
 esphome:
-  name: trotec-remote
+  name: esphome-trotec-remote
   friendly_name: Trotec 145E
 
 button:

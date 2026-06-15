@@ -3,7 +3,7 @@ packages:
   device: !include ../common/device.nous_a8t.yaml
 
 esphome:
-  name: "fume-extractor"
+  name: "esphome-fume-extractor"
   friendly_name: Fume Extractor
   on_boot:
     # Suspend the ble_client sensors to prevent connection failure logging
